@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     employe:null,
-    jobs:null,
-    internships:null,
+    tasks:null,
+    singletask:null,
     errors:[],
     isAuthenticated:false
 }
@@ -16,11 +16,17 @@ export const EmployeReducer = createSlice({
     (state.employe = action.payload),
     (state.isAuthenticated = true)
     },
-    addjobs: (state,action) =>{
-    state.jobs = action.payload
+    addtasks: (state,action) =>{
+    state.tasks = action.payload
     },
-    addinternships: (state,action) =>{
-    state.internships = action.payload
+    removetasks: (state,action) =>{
+    (state.tasks = null)
+    },
+    addsingletask: (state,action) =>{
+    state.singletask = action.payload
+    },
+    removesingletask: (state,action) =>{
+    (state.singletask = null)
     },
     removeemploye: (state,action) =>{
     (state.employe = null),
@@ -36,6 +42,6 @@ export const EmployeReducer = createSlice({
   },
 })
 
-export const { addemploye , removeemploye , iserror , removeerror , addjobs , addinternships } = EmployeReducer.actions
+export const {removetasks,addsingletask,removesingletask ,addemploye , removeemploye , iserror , removeerror , addtasks } = EmployeReducer.actions
 
 export default EmployeReducer.reducer

@@ -1,9 +1,9 @@
 import axios from "@/utils/axios";
-import { addemploye,removeemploye,addjobs,addinternships,iserror,removeerror } from "../Reducers/EmployeReducer";
+import { addemploye,removeemploye,addtasks,iserror,removeerror, removetasks, addsingletask } from "../Reducers/EmployeReducer";
 
 export const asynccurrentemploye = () => async(dispatch,getstate) =>{
     try {
-        const { data } = await axios.post("/employe/employe")
+        const { data } = await axios.post("/employe/")
         dispatch(addemploye(data))
         // console.log("employe",data.employe)
         // console.log(data)
@@ -38,133 +38,61 @@ export const asyncsignoutemploye = (employe) => async(dispatch,getstate) =>{
     try {
         const { data } = await axios.get("/employe/signout" , employe)
         dispatch(removeemploye())
+        dispatch(removetasks())
     } catch (error) {
         dispatch(iserror(error.response.data.message))
     }
 }
 
-export const asyncemployeupdate = (employe) => async(dispatch,getstate) =>{
+
+export const asyncshowtasks = () => async(dispatch,getstate) =>{
     try {
-        const { _id } = await getstate().EmployeReducer.employe
-        const { data } = await axios.post("/employe/update/" + _id , employe)
-        dispatch(asynccurrentemploye())
+        const { data } = await axios.post("/employe/task/read"  )
+        dispatch(addtasks(data.tasks))
     } catch (error) {
         dispatch(iserror(error.response.data.message))
     }
 }
-
-
-
-export const asyncemployeavatar = (avatar) => async(dispatch,getstate) =>{
+export const asyncshowsingletask = (id) => async(dispatch,getstate) =>{
     try {
-        const { _id } = await getstate().EmployeReducer.employe
-        const { data } = await axios.post(`/employe/avatar/${_id}` , avatar)
-        dispatch(asynccurrentemploye())
-    } catch (error) {
-        dispatch(iserror(error.response.data.message))
-    }
-}
-
-// export const asyncemployeavatar = (avatar) => async(dispatch,getstate) =>{
-//     try {
-//         const { _id } = await getstate().employeReducer.employe
-//         const { data } = await axios.post(`/employe/avatar/${_id}` , avatar)
-//         dispatch(asynccurrentemploye())
-//     } catch (error) {
-//         dispatch(iserror(error.response.data.message))
-//         // dispatch(iserror(error.response.data.message))
-//     }
-// }
-
-
-
-export const asyncresetpassword = (password) => async(dispatch,getstate) =>{
-    try {
-        const { _id } = await getstate().employeReducer.employe
-        const { data } = await axios.post("/employe/reset-password/" + _id , password)
-        dispatch(asynccurrentemploye())
-    } catch (error) {
-        dispatch(iserror(error.response.data.message))
-    }
-}
-
-export const asyncforgetpassword = (email) => async(dispatch,getstate) =>{
-    try {
-        const { data } = await axios.post("/employe/send-mail" ,  email)
-        dispatch(asynccurrentemploye())
+        const { data } = await axios.post(`/employe/task/readsingle/${id}`, id )
+        // console.log(data)
+        dispatch(addsingletask(data.task))
     } catch (error) {
         dispatch(iserror(error.response.data.message))
     }
 }
 
 
+export const asynccreatetasks = (task)=>async(dispatch,getState)=>{
 
-export const asyncotpemployepassword = (newpass) => async(dispatch,getstate) =>{
-    try {
-        const { data } = await axios.post("/employe/forget-link" ,  newpass)
-        dispatch(asynccurrentemploye())
-    } catch (error) {
+    try{
+        const {data} = await axios.post("/employe/task/create",task);
+        dispatch(asynccurrentemploye());
+    }catch(error){
         dispatch(iserror(error.response.data.message))
     }
 }
 
 
+export const asyncupdatetasks = (id)=>async(dispatch,getState)=>{
 
-
-
-export const asyncshowinternships = () => async(dispatch,getstate) =>{
-    try {
-        const { data } = await axios.post("/employe/read/internships/"  )
-        dispatch(addinternships(data.internships))
-        dispatch(asynccurrentemploye())
-
-    } catch (error) {
-        dispatch(iserror(error.response.data.message))
-    }
-}
-
-// 
-export const asyncshowsingleinternships = (id) => async(dispatch,getstate) =>{
-    try {
-        const { data } = await axios.post("/employe/readsingle/internship/" + id  )
-        dispatch(addinternships(data.internship))
-        dispatch(asynccurrentemploye())
-
-    } catch (error) {
-        dispatch(iserror(error.response.data.message))
-    }
-}
-
-export const asyncshowjobs = () => async(dispatch,getstate) =>{
-    try {
-        const { data } = await axios.post("/employe/read/jobs/"  )
-        dispatch(addjobs(data.jobs))
-    } catch (error) {
+    try{
+        const {data} = await axios.post(`/employe/task/update/${id}`,task);
+        dispatch(asynccurrentemploye());
+    }catch(error){
         dispatch(iserror(error.response.data.message))
     }
 }
 
 
+export const asyncdeletetasks = (id)=>async(dispatch,getState)=>{
 
-
-export const asyncapplyjobemploye = (id) => async(dispatch,getstate) =>{
-    try {
-        const { data } = await axios.post("/employe/apply/job/" + id  )
-        dispatch(asynccurrentemploye())
-        dispatch(addjobs())
-    } catch (error) {
+    try{
+        const {data} = await axios.post(`/employe/task/delete/${id}`,id);
+        dispatch(asynccurrentemploye());
+    }catch(error){
         dispatch(iserror(error.response.data.message))
     }
 }
 
-
-export const asyncapplyinternshipemploye = (id) => async(dispatch,getstate) =>{
-    try {
-        const { data } = await axios.post("/employe/apply/internship/" + id  )
-        dispatch(asynccurrentemploye())
-        dispatch(addinternships())
-
-    } catch (error) {
-        dispatch(iserror(error.response.data.message))
-    }
-}

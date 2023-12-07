@@ -1,5 +1,5 @@
 "use client"
-import { asyncshowinternships, asyncshowjobs } from '@/Store/Actions/StudentActions'
+import { asyncshowtasks } from '@/Store/Actions/EmployeActions'
 import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,8 +13,8 @@ const EmployeAuth = ({children}) => {
           router.push("/employe/")
       }
       if(isAuthenticated){
-        dispatch(asyncshowinternships())
-        dispatch(asyncshowjobs())
+        router.push("/employe/auth")
+        dispatch(asyncshowtasks())
       }
   },[isAuthenticated])     
   return children

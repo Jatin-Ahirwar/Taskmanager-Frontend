@@ -20,7 +20,7 @@ const signin = () => {
   const signinHandler = (e)=>{
     e.preventDefault()
     const employe = {
-      email,password
+      email:email,password:password
     }
     dispatch(asyncinemploye(employe))
   }

@@ -17,7 +17,7 @@ const page = () => {
     <div className='studentauth'>
       <div className='tags'>
       <h2>Employee authentication and authorization.</h2>
-      <p>Create a user-friendly employee login page for your website. Ensure it's secure and easy to use. Include fields for username and password, along with a "Forgot Password" option. Implement CAPTCHA or two-factor authentication for added security. Provide clear instructions and error messages for a seamless login experience. Additionally, consider a "Remember Me" feature for convenience. </p>
+      <p>"Introducing my innovative Task Manager web app—streamlining productivity with user-friendly features. Effortlessly organize tasks, set priorities, and track progress in real-time. Enjoy a seamless experience that enhances efficiency and helps you stay focused. Elevate your productivity with this intuitive tool, designed for simplicity and effectiveness. Happy organizing!"</p>
       <Link className='Link' id='register' href="/employe/signin">Signin</Link>
       <Link className='Link' id='register' href="/employe/signup">Signup</Link>  
       </div>
